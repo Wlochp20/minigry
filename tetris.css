@@ -1,3 +1,20 @@
 body{
-
+    margin: 0;
+    padding: 0;
+     
 }
+th{
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    background:rgb(109, 98, 98);
+}
+table{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+
+
