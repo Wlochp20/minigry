@@ -1,1 +1,1 @@
-# minigry
+# strona gry
