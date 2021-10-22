@@ -12,7 +12,7 @@ btn[0].addEventListener("click", function () {
   }, predkosc);
 });
 p = 4;
-predkosc = 200;
+predkosc = 300;
 let figury;
 let rzad;
 let k;
