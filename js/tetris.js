@@ -89,24 +89,23 @@ function stworzblok() {
 function sprawdzanie() {
   let rz=0;
   let x=1
+  for(ix=0;ix<20;ix++){
   for (let i = 0; i < 10; i++) {
     kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-x]
-    console.log(kwadracik)
     if (kwadracik.classList.contains("zajete")) {
-      kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-x].style.background="green"
       rz++;
-      
     }
     x++;
   }
-  console.log(rz)
   if(rz==10){
     for (let i = 1; i <= 10; i++) {
-      kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-i]
+      kwadracik=document.getElementsByClassName("kwadrat")[Math.floor(document.querySelectorAll(".kwadrat").length-x)+i]
       kwadracik.style.background="none"
       kwadracik.setAttribute("class","kwadrat")
 
   }
+}
+  rz=0;
 }
 }
 
