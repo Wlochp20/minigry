@@ -1,3 +1,6 @@
+body{
+    background-color: #05030e;
+}
 .plansza{
     border: 1px solid rgb(0, 0, 0);
     width: max-content;
@@ -21,5 +24,5 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
 }
