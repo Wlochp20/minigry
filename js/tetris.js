@@ -1,25 +1,26 @@
 btn = document.getElementsByTagName("button");
-btn[0].addEventListener("click", function () {
+btn[0].addEventListener("click", function() {
   btn[0].style.display = "none";
   btn[1].style.display = "none";
   document.getElementsByTagName("select")[0].style.display = "none";
   render();
-  inter=setInterval(() => {
-    p += rzad;
+  inter = setInterval(() => {
+    p += 10;
+    rzad += 1;
     wyswietl("none");
     dekfig();
     wyswietl(figury[rand][figury[rand].length - 1][0]);
-  }, predkosc);
+    sprawdzanie()
+  }, 400);
 });
 p = 4;
-predkosc = 300;
+let rzad = 1;
 let figury;
-let rzad;
 let k;
 let rand;
 let bok;
 
-function odswiez(){
+function odswiez() {
   wyswietl("none");
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
@@ -54,16 +55,20 @@ function ruch(e) {
       bok = 0;
     }
   }
-  if(e.key=="ArrowDown"){
-    predkosc=100;
-    clearInterval()
+  if (e.key == "ArrowDown") {
+    wyswietl("none");
+    p += 10;
+    rzad += 1;
   }
 
   if (e.key == "ArrowRight") {
+    // if (figury[rand][2][bok + 1] < 9 * rzad) {
+    //   p++;
+    // }
     p++;
     wyswietl("none");
   } else if (e.key == "ArrowLeft") {
-    p--;
+      p--;
     wyswietl("none");
   }
 
@@ -75,10 +80,34 @@ document.addEventListener("keydown", ruch);
 function stworzblok() {
   p = 4;
   bok = 0;
-  rzad = 10;
+
   rand = Math.floor(Math.random() * 4);
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
+}
+
+function sprawdzanie() {
+  let rz=0;
+  let x=1
+  for (let i = 0; i < 10; i++) {
+    kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-x]
+    console.log(kwadracik)
+    if (kwadracik.classList.contains("zajete")) {
+      kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-x].style.background="green"
+      rz++;
+      
+    }
+    x++;
+  }
+  console.log(rz)
+  if(rz==10){
+    for (let i = 1; i <= 10; i++) {
+      kwadracik=document.getElementsByClassName("kwadrat")[document.querySelectorAll(".kwadrat").length-i]
+      kwadracik.style.background="none"
+      kwadracik.setAttribute("class","kwadrat")
+
+  }
+}
 }
 
 function wyswietl(kolorek) {
@@ -94,7 +123,6 @@ function wyswietl(kolorek) {
         .getElementsByClassName("kwadrat")
         [jak + 10].classList.contains("zajete")
     ) {
-      rzad = 0;
       x++;
 
       if (x == 1) {
@@ -111,30 +139,34 @@ function wyswietl(kolorek) {
 
 function dekfig() {
   figury = [
-    [[p, p + 10, p + 20, p + 30], [p, p + 1, p + 2, p + 3], ["red"]],
     [
-      [p, p + 1, p + 2, p + 10 + 1],
-      [p + 1, p + 10 + 1, p + 10, p + 20 + 1],
-      [p + 10, p + 11, p + 1, p + 12],
-      [p + 1, p + 11, p + 10 + 2, p + 21],
-      ["orange"],
+      [p + 10, p, p + 20, p + 30],
+      [p, p + 3, p + 1, p + 2],
+      ["red", p, p + 3]
+    ],
+    [
+      [p, p + 2, p + 1, p + 10 + 1],
+      [p + 10 + 1, p + 1, p + 10, p + 20 + 1],
+      [p + 10, p + 12, p + 11, p + 1],
+      [p + 1, p + 10 + 2, p + 11, p + 21],
+      ["orange"]
     ],
     [[p, p + 1, p + 10, p + 11], ["aqua"]],
     [
-      [p + 1, p + 11, p + 21, p + 22],
-      [p, p + 1, p + 2, p + 10],
+      [p + 11, p + 22, p + 1, p + 21],
+      [p, p + 2, p + 1, p + 10],
       [p + 1, p + 2, p + 10 + 2, p + 20 + 2],
-      [p + 2, p + 10, p + 11, p + 12],
-      ["yellow"],
+      [p + 10, p + 2, p + 11, p + 12],
+      ["yellow"]
     ],
     [
       [p + 2, p + 12, p + 22, p + 21],
-      [p, p + 10, p + 11, p + 12],
+      [p, p + 12, p + 10, p + 11],
       [p, p + 1, p + 10, p + 20],
-      [p, p + 1, p + 2, p + 12],
-      ["pink"],
+      [p, p + 2, p + 1, p + 12],
+      ["pink"]
     ],
     [[p + 1, p + 2, p + 10, p + 11], [p, p + 10, p + 11, p + 21], ["blue"]],
-    [[p, p + 1, p + 11, p + 12], [p + 1, p + 11, p + 10, p + 20], ["green"]],
+    [[p, p + 1, p + 11, p + 12], [p + 1, p + 11, p + 10, p + 20], ["green"]]
   ];
 }
