@@ -1,8 +1,19 @@
+
+
+let rzad = 1;
+let figury;
+let k;
+let rand ;
+let rand1=Math.floor(Math.random() * 7);
+let rand2=rand1;
+let bok;
+let punkty=0;
+let rzedy=0;
 btn = document.getElementsByTagName("button");
+
 btn[0].addEventListener("click", function () {
   btn[0].style.display = "none";
   btn[1].style.display = "none";
-  document.getElementsByTagName("select")[0].style.display = "none";
   render();
   inter = setInterval(() => {
     p += 10;
@@ -15,13 +26,7 @@ btn[0].addEventListener("click", function () {
     czywyg();
   }, 400);
 });
-p = 4;
-let rzad = 1;
-let figury;
-let k;
-let rand = 0;
-let rand1 = 0;
-let bok;
+document.addEventListener("keydown", ruch);
 
 function czywyg() {
   for (let index1 = 0; index1 < 9; index1++) {
@@ -32,8 +37,6 @@ function czywyg() {
     }
   }
 }
-
-
 
 function odswiez() {
   wyswietl("none");
@@ -59,6 +62,73 @@ function render() {
       szuk[oblicz1].setAttribute("class", "kwadrat");
     }
   }
+
+  document
+    .getElementsByTagName("body")[0]
+    .appendChild(document.createElement("div"));
+  document
+    .querySelectorAll("div")
+    [document.querySelectorAll("div").length - 1].setAttribute(
+      "class",
+      "punkty"
+    );
+
+    document
+    .getElementsByClassName("punkty")[0]
+    .appendChild(document.createElement("div"));
+  document
+    .querySelectorAll("div")
+    [document.querySelectorAll("div").length - 1].setAttribute(
+      "class",
+      "kratka"
+    );
+  for (let index = 0; index < 4; index++) {
+    document
+      .getElementsByClassName("kratka")[0]
+      .appendChild(document.createElement("div"));
+    document
+      .querySelectorAll("div")
+      [document.querySelectorAll("div").length - 1].setAttribute(
+        "class",
+        "rzad1"
+      );
+    for (let index1 = 0; index1 < 4; index1++) {
+      document
+        .getElementsByClassName("rzad1")
+        [index].appendChild(document.createElement("div"));
+      document
+        .querySelectorAll("div")
+        [document.querySelectorAll("div").length - 1].setAttribute(
+          "class",
+          "kolejnafigura"
+        );
+    }
+  }
+  document
+    .getElementsByClassName("punkty")[0]
+    .appendChild(document.createElement("div"));
+  document.getElementsByTagName("div")[
+    document.querySelectorAll("div").length - 1
+  ].innerHTML="rzędy: 0"
+
+  document.getElementsByTagName("div")[
+    document.querySelectorAll("div").length - 1
+  ].setAttribute("class","napis")
+
+  document
+  .getElementsByClassName("punkty")[0]
+  .appendChild(document.createElement("div"));
+
+
+document.getElementsByTagName("div")[
+  document.querySelectorAll("div").length - 1
+].innerHTML="bloki: 0"
+
+
+
+document.getElementsByTagName("div")[
+  document.querySelectorAll("div").length - 1
+].setAttribute("class","napis")
 
   stworzblok();
 }
@@ -91,17 +161,38 @@ function ruch(e) {
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
 }
-document.addEventListener("keydown", ruch);
 
+function pokaznastepna() {
+  for (let index1 = 0; index1 < 15; index1++) {
+    document.getElementsByClassName("kolejnafigura")[index1].style.background="none"
+    
+  }
+  p=1;
+  dekfig();
+  for (let index = 0; index < 4; index++) {  
+    kl=figury[rand1][0][index]
+    if (kl>=30) {
+      kl-=18
+    }else if (kl>=20) {
+      kl-=12
+    }else if (kl>=10) {
+      kl-=6
+    }
+    document.getElementsByClassName("kolejnafigura")[kl].style.background=figury[rand1][figury[rand1].length-1][0]
+    console.log(kl)
+  }
+}
 function stworzblok() {
   p = 4;
   bok = 0;
   rzad = 0;
-
-  while (rand1 == rand) {
-    rand = Math.floor(Math.random() * 7);
+  rand=rand1;
+  while (rand2 == rand1) {
+    rand1 = Math.floor(Math.random() * 7);
   }
-  rand1 = rand;
+  rand2 = rand1;
+  console.log(rand,rand1)
+  pokaznastepna()
 
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
@@ -122,7 +213,13 @@ function sprawdzanie() {
       x++;
     }
     if (rz == 10) {
+      rzedy++;
+      punkty+=10;
+      document.getElementsByClassName("napis")[0].innerHTML="rzędy: "+rzedy;
+      document.getElementsByClassName("napis")[1].innerHTML="punkty: "+punkty;
+
       for (let i = 1; i <= 10; i++) {
+        pt = 200 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
         kwadracik =
           document.getElementsByClassName("kwadrat")[
             Math.floor(document.querySelectorAll(".kwadrat").length - x) + i
@@ -131,7 +228,7 @@ function sprawdzanie() {
         kwadracik.setAttribute("class", "kwadrat");
       }
       for (
-        let index = document.querySelectorAll(".kwadrat").length - 11;
+        let index = document.querySelectorAll(".kwadrat").length - pt - 1;
         index > 10;
         index--
       ) {
@@ -155,6 +252,7 @@ function sprawdzanie() {
               document
                 .getElementsByClassName("kwadrat")
                 [index + orzaddalej].setAttribute("class", "kwadrat");
+
               orzaddalej += 10;
             } else {
               document.getElementsByClassName("kwadrat")[
@@ -211,7 +309,7 @@ function dekfig() {
       [p, p + 2, p + 1, p + 10 + 1, p, p + 2],
       [p + 10 + 1, p + 1, p + 10, p + 20 + 1, p + 1, p + 1],
       [p + 10, p + 12, p + 11, p + 1, p, p + 2],
-      [p + 1, p + 10 + 2, p + 11, p + 21, p, p + 2],
+      [p + 1, p + 10 + 2, p + 11, p + 21, p + 1, p + 2],
       ["#F2BC57"],
     ],
     [[p, p + 1, p + 10, p + 11, p, p + 1], ["#EDFF7A"]],
