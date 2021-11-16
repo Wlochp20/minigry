@@ -182,6 +182,7 @@ function pokaznastepna() {
     console.log(kl)
   }
 }
+
 function stworzblok() {
   p = 4;
   bok = 0;
@@ -193,7 +194,7 @@ function stworzblok() {
   rand2 = rand1;
   console.log(rand,rand1)
   pokaznastepna()
-
+  p=4; 
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
 }
