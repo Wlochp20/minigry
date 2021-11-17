@@ -16,6 +16,7 @@ btn[0].addEventListener("click", function () {
   btn[1].style.display = "none";
   render();
   inter = setInterval(() => {
+    
     p += 10;
     rzad += 10;
 
@@ -29,11 +30,18 @@ btn[0].addEventListener("click", function () {
 document.addEventListener("keydown", ruch);
 
 function czywyg() {
-  for (let index1 = 0; index1 < 9; index1++) {
+  for (let index1 = 40; index1 < 49; index1++) {
     if (
       document.querySelectorAll(".kwadrat")[index1].classList.contains("zajete")
     ) {
-      document.write("przegrałeś");
+      clearInterval(inter)
+
+      setTimeout(() => {
+        document.querySelector(".plansza").remove()
+        document.querySelector(".punkty").remove()
+      }, 1000);
+      document.createElement("div")
+
     }
   }
 }
@@ -50,7 +58,7 @@ function render() {
     .getElementsByTagName("body")[0]
     .appendChild(document.createElement("div"));
   szuk[0].setAttribute("class", "plansza");
-  for (i = 1; i <= 20; i++) {
+  for (i = 1; i <= 24; i++) {
     let oblicz = document.querySelectorAll("div").length;
     let cd = document.createElement("div");
     document.getElementsByTagName("div")[0].appendChild(cd);
@@ -61,6 +69,10 @@ function render() {
       document.getElementsByTagName("div")[oblicz].appendChild(cd1);
       szuk[oblicz1].setAttribute("class", "kwadrat");
     }
+  }
+  for (let index = 0; index < 4; index++) {
+    console.log("wykonane")
+    document.querySelectorAll('.rzad')[index].style.display="none"
   }
 
   document
@@ -202,7 +214,7 @@ function stworzblok() {
 function sprawdzanie() {
   let rz = 0;
   let x = 1;
-  for (ix = 0; ix < 20; ix++) {
+  for (ix = 0; ix < 24; ix++) {
     for (let i = 0; i < 10; i++) {
       kwadracik =
         document.getElementsByClassName("kwadrat")[
@@ -220,7 +232,7 @@ function sprawdzanie() {
       document.getElementsByClassName("napis")[1].innerHTML="punkty: "+punkty;
 
       for (let i = 1; i <= 10; i++) {
-        pt = 200 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
+        pt = 239 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
         kwadracik =
           document.getElementsByClassName("kwadrat")[
             Math.floor(document.querySelectorAll(".kwadrat").length - x) + i
@@ -280,7 +292,7 @@ function wyswietl(kolorek) {
     ].style.background = kolorek;
     let jak = figury[rand][bok][r];
     if (
-      figury[rand][bok][r] > 189 ||
+      figury[rand][bok][r] > 229 ||
       document
         .getElementsByClassName("kwadrat")
         [jak + 10].classList.contains("zajete")
