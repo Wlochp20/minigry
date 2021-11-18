@@ -1,6 +1,4 @@
 
-
-let rzad = 1;
 let figury;
 let k;
 let rand ;
@@ -16,16 +14,16 @@ btn[0].addEventListener("click", function () {
   btn[1].style.display = "none";
   render();
   inter = setInterval(() => {
-    
+    czywyg();
     p += 10;
     rzad += 10;
-
     wyswietl("none");
     dekfig();
     wyswietl(figury[rand][figury[rand].length - 1][0]);
     sprawdzanie();
     czywyg();
-  }, 400);
+   
+  }, 300);
 });
 document.addEventListener("keydown", ruch);
 
@@ -39,8 +37,11 @@ function czywyg() {
       setTimeout(() => {
         document.querySelector(".plansza").remove()
         document.querySelector(".punkty").remove()
-      }, 1000);
-      document.createElement("div")
+      }, 1);
+      document.querySelector("section").appendChild(document.createElement("div"))
+      // document.querySelector("div").setAttribute("class","wynik")
+      document.querySelector("button").innerHTML="jeszcze raz"
+      document.querySelector("button").style.display="block"
 
     }
   }
@@ -156,6 +157,7 @@ function ruch(e) {
     wyswietl("none");
     p += 10;
     rzad += 10;
+    czywyg();
   }
 
   if (e.key == "ArrowRight") {
@@ -196,7 +198,7 @@ function pokaznastepna() {
 }
 
 function stworzblok() {
-  p = 4;
+  
   bok = 0;
   rzad = 0;
   rand=rand1;
@@ -285,6 +287,7 @@ function sprawdzanie() {
 }
 
 function wyswietl(kolorek) {
+  
   x = 0;
   for (r = 0; r < 4; r++) {
     document.getElementsByClassName("kwadrat")[
