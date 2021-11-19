@@ -4,6 +4,7 @@ body{
     background-color: #05030e;
 }
 button{
+    margin-bottom: 10px;
     border-radius: 10px;
     font-size: 30px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -11,9 +12,22 @@ button{
     background-color: #05030e;
     color: rgb(231, 219, 219);
     border:1px solid blueviolet;
-    margin: 10px;
+    
     width: 300px;
     height: 70px;
+}
+h1{
+    margin-bottom: 50px;
+    background-color: rgb(88, 2, 131);
+    width: 100%;
+    font-size: 50px;
+    display: inline-block;
+    color: white;
+}
+p{
+    padding-bottom: 30px;
+    font-size: 26px;
+    color: white;
 }
 button:hover{
     color: #05030e;
@@ -24,8 +38,19 @@ section{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: absolute;
     height: 99%;
+}
+.wynik{
+    border-bottom: 2px solid blueviolet;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    width: 100%;
+    background-color:#05030e;
 }
 .plansza{
     background-color: black;
