@@ -1,50 +1,80 @@
-
+zakaz = false;
 let figury;
 let k;
-let rand ;
-let rand1=Math.floor(Math.random() * 7);
-let rand2=rand1;
+let rand1=0;
+
+let rand;
 let bok;
-let punkty=0;
-let rzedy=0;
+let punkty = 0;
+let rzedy = 0;
 btn = document.getElementsByTagName("button");
 
 btn[0].addEventListener("click", function () {
   btn[0].style.display = "none";
   btn[1].style.display = "none";
   render();
-  inter = setInterval(() => {
-    czywyg();
-    p += 10;
-    rzad += 10;
-    wyswietl("none");
-    dekfig();
-    wyswietl(figury[rand][figury[rand].length - 1][0]);
-    sprawdzanie();
-    czywyg();
-   
-  }, 300);
+
+    inter = setInterval(() => {
+      
+      
+        p += 10;
+        rzad += 10;
+        wyswietl("none");
+        dekfig();
+        wyswietl(figury[rand][figury[rand].length - 1][0]);
+        sprawdzanie();
+        
+      
+        czywyg()
+       
+    }, 300);
+    
+    setInterval(() => {
+      czas++;
+    }, 1000);
+  
 });
 document.addEventListener("keydown", ruch);
 
 function czywyg() {
-  for (let index1 = 40; index1 < 49; index1++) {
+  for (let index1 = 30; index1 < 39; index1++) {
+    
     if (
       document.querySelectorAll(".kwadrat")[index1].classList.contains("zajete")
     ) {
-      clearInterval(inter)
-
+      rand1=null
+      clearInterval(inter);
+      minuty=Math.floor(czas/60)
+      if ((czas-minuty*60)<10) {
+        przed="0"
+      }else{
+        przed=""
+      }
       setTimeout(() => {
-        document.querySelector(".plansza").remove()
-        document.querySelector(".punkty").remove()
-      }, 1);
-      document.querySelector("section").appendChild(document.createElement("div"))
-      // document.querySelector("div").setAttribute("class","wynik")
-      document.querySelector("button").innerHTML="jeszcze raz"
-      document.querySelector("button").style.display="block"
-
+        document.querySelector(".plansza").remove();
+        document.querySelector(".punkty").remove();
+        document.querySelector("body").appendChild(document.createElement("div"))
+        document.querySelector("div").setAttribute("class","wynik")
+        document.querySelector("div").appendChild(document.createElement('h1'))
+        document.querySelector("h1").innerHTML="WYNIK:"
+        document.querySelector("div").appendChild(document.createElement("p"))
+        document.querySelector('p').innerHTML="RZĘDY  "+rzedy
+        document.querySelector('div').appendChild(document.createElement("p"))
+        document.querySelectorAll('p')[1].innerHTML="BLOKI   "+punkty
+        document.querySelector('div').appendChild(document.createElement("p"))
+        document.querySelectorAll('p')[2].innerHTML="CZAS  "+przed+minuty+":"+przed+(czas-minuty*60);
+        document.querySelector("button").innerHTML = "jeszcze raz";
+        document.querySelector("button").style.display = "block";
+        document.querySelector('section').style.alignItems="flex-end"
+        document.querySelector("button").style.marginBottom="200px"
+        document.querySelector("section").style.justifyContent="flex-end"
+        
+      }, 1000);
+      
     }
+    
   }
+
 }
 
 function odswiez() {
@@ -54,12 +84,20 @@ function odswiez() {
 }
 
 function render() {
+  czas=0;
+  if (rand1==null) {
+    console.log("tak?")
+    document.querySelector('.wynik').remove()
+   }
+ rand1 = Math.floor(Math.random() * 7);
+ rand2 = rand1;
   let szuk = document.getElementsByTagName("div");
   document
     .getElementsByTagName("body")[0]
     .appendChild(document.createElement("div"));
+    
   szuk[0].setAttribute("class", "plansza");
-  for (i = 1; i <= 24; i++) {
+  for (i = 1; i <= 23; i++) {
     let oblicz = document.querySelectorAll("div").length;
     let cd = document.createElement("div");
     document.getElementsByTagName("div")[0].appendChild(cd);
@@ -71,9 +109,9 @@ function render() {
       szuk[oblicz1].setAttribute("class", "kwadrat");
     }
   }
-  for (let index = 0; index < 4; index++) {
-    console.log("wykonane")
-    document.querySelectorAll('.rzad')[index].style.display="none"
+  for (let index = 0; index < 3; index++) {
+    console.log("wykonane");
+    document.querySelectorAll(".rzad")[index].style.display= "none";
   }
 
   document
@@ -86,7 +124,7 @@ function render() {
       "punkty"
     );
 
-    document
+  document
     .getElementsByClassName("punkty")[0]
     .appendChild(document.createElement("div"));
   document
@@ -122,26 +160,29 @@ function render() {
     .appendChild(document.createElement("div"));
   document.getElementsByTagName("div")[
     document.querySelectorAll("div").length - 1
-  ].innerHTML="rzędy: 0"
+  ].innerHTML = "rzędy: 0";
+
+  document
+    .getElementsByTagName("div")
+    [document.querySelectorAll("div").length - 1].setAttribute(
+      "class",
+      "napis"
+    );
+
+  document
+    .getElementsByClassName("punkty")[0]
+    .appendChild(document.createElement("div"));
 
   document.getElementsByTagName("div")[
     document.querySelectorAll("div").length - 1
-  ].setAttribute("class","napis")
+  ].innerHTML = "bloki: 0";
 
   document
-  .getElementsByClassName("punkty")[0]
-  .appendChild(document.createElement("div"));
-
-
-document.getElementsByTagName("div")[
-  document.querySelectorAll("div").length - 1
-].innerHTML="bloki: 0"
-
-
-
-document.getElementsByTagName("div")[
-  document.querySelectorAll("div").length - 1
-].setAttribute("class","napis")
+    .getElementsByTagName("div")
+    [document.querySelectorAll("div").length - 1].setAttribute(
+      "class",
+      "napis"
+    );
 
   stworzblok();
 }
@@ -153,11 +194,11 @@ function ruch(e) {
       bok = 0;
     }
   }
-  if (e.key == "ArrowDown") {
+  if (e.key == "ArrowDown" && rand1!=null) {
     wyswietl("none");
     p += 10;
     rzad += 10;
-    czywyg();
+    console.log("s");
   }
 
   if (e.key == "ArrowRight") {
@@ -178,37 +219,39 @@ function ruch(e) {
 
 function pokaznastepna() {
   for (let index1 = 0; index1 < 15; index1++) {
-    document.getElementsByClassName("kolejnafigura")[index1].style.background="none"
-    
+    document.getElementsByClassName("kolejnafigura")[index1].style.background =
+      "none";
   }
-  p=1;
+  p = 1;
   dekfig();
-  for (let index = 0; index < 4; index++) {  
-    kl=figury[rand1][0][index]
-    if (kl>=30) {
-      kl-=18
-    }else if (kl>=20) {
-      kl-=12
-    }else if (kl>=10) {
-      kl-=6
+  for (let index = 0; index < 4; index++) {
+    kl = figury[rand1][0][index];
+    if (kl >= 30) {
+      kl -= 18;
+    } else if (kl >= 20) {
+      kl -= 12;
+    } else if (kl >= 10) {
+      kl -= 6;
     }
-    document.getElementsByClassName("kolejnafigura")[kl].style.background=figury[rand1][figury[rand1].length-1][0]
-    console.log(kl)
+    document.getElementsByClassName("kolejnafigura")[kl].style.background =
+      figury[rand1][figury[rand1].length - 1][0];
+    console.log(kl);
   }
 }
 
 function stworzblok() {
-  
+  if (rand1==null) {
+    return 0;
+  }
   bok = 0;
   rzad = 0;
-  rand=rand1;
+  rand = rand1;
   while (rand2 == rand1) {
     rand1 = Math.floor(Math.random() * 7);
   }
   rand2 = rand1;
-  console.log(rand,rand1)
-  pokaznastepna()
-  p=4; 
+  pokaznastepna();
+  p = 4;
   dekfig();
   wyswietl(figury[rand][figury[rand].length - 1][0]);
 }
@@ -216,7 +259,7 @@ function stworzblok() {
 function sprawdzanie() {
   let rz = 0;
   let x = 1;
-  for (ix = 0; ix < 24; ix++) {
+  for (ix = 0; ix < 23; ix++) {
     for (let i = 0; i < 10; i++) {
       kwadracik =
         document.getElementsByClassName("kwadrat")[
@@ -229,12 +272,13 @@ function sprawdzanie() {
     }
     if (rz == 10) {
       rzedy++;
-      punkty+=10;
-      document.getElementsByClassName("napis")[0].innerHTML="rzędy: "+rzedy;
-      document.getElementsByClassName("napis")[1].innerHTML="punkty: "+punkty;
+      punkty += 10;
+      document.getElementsByClassName("napis")[0].innerHTML = "rzędy: " + rzedy;
+      document.getElementsByClassName("napis")[1].innerHTML =
+        "punkty: " + punkty;
 
       for (let i = 1; i <= 10; i++) {
-        pt = 239 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
+        pt = 229 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
         kwadracik =
           document.getElementsByClassName("kwadrat")[
             Math.floor(document.querySelectorAll(".kwadrat").length - x) + i
@@ -287,7 +331,7 @@ function sprawdzanie() {
 }
 
 function wyswietl(kolorek) {
-  
+
   x = 0;
   for (r = 0; r < 4; r++) {
     document.getElementsByClassName("kwadrat")[
@@ -295,7 +339,7 @@ function wyswietl(kolorek) {
     ].style.background = kolorek;
     let jak = figury[rand][bok][r];
     if (
-      figury[rand][bok][r] > 229 ||
+      figury[rand][bok][r] > 219 ||
       document
         .getElementsByClassName("kwadrat")
         [jak + 10].classList.contains("zajete")
