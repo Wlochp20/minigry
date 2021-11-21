@@ -1,80 +1,89 @@
 zakaz = false;
 let figury;
 let k;
-let rand1=0;
-
+let rand1 = 0;
 let rand;
+let p;
 let bok;
-let punkty = 0;
-let rzedy = 0;
+let czas;
 btn = document.getElementsByTagName("button");
 
 btn[0].addEventListener("click", function () {
   btn[0].style.display = "none";
   btn[1].style.display = "none";
   render();
+  czas = 0;
+  inter = setInterval(() => {
+    p += 10;
+    rzad += 10;
+    wyswietl("none");
+    dekfig();
+    wyswietl(figury[rand][figury[rand].length - 1][0]);
+    sprawdzanie();
+    czywyg();
+  }, 300);
 
-    inter = setInterval(() => {
-      
-      
-        p += 10;
-        rzad += 10;
-        wyswietl("none");
-        dekfig();
-        wyswietl(figury[rand][figury[rand].length - 1][0]);
-        sprawdzanie();
-        
-      
-        czywyg()
-       
-    }, 300);
-    
-    setInterval(() => {
-      czas++;
-    }, 1000);
-  
+  setInterval(() => {
+    czas++;
+  }, 1000);
 });
 document.addEventListener("keydown", ruch);
 
 function czywyg() {
   for (let index1 = 30; index1 < 39; index1++) {
-    
     if (
       document.querySelectorAll(".kwadrat")[index1].classList.contains("zajete")
     ) {
-      rand1=null
+      rand1 = null;
       clearInterval(inter);
-      minuty=Math.floor(czas/60)
-      if ((czas-minuty*60)<10) {
-        przed="0"
-      }else{
-        przed=""
+      setTimeout(() => {
+      for (
+        let index = 0;
+        index < document.querySelectorAll(".kwadrat").length;
+        index++
+      ) {
+        if (
+          document
+            .querySelectorAll(".kwadrat")
+            [index].classList.contains("zajete")
+        ) {
+          setTimeout(() => {
+            document.querySelectorAll(".kwadrat")[index].style.background =
+              "blueviolet";
+          }, index * 3);
+        }
+      }
+    }, 300);
+      minuty = Math.floor(czas / 60);
+      if (czas - minuty * 60 < 10) {
+        przed = "0";
+      } else if(czas - minuty * 60>9) {
+        przed = "";
       }
       setTimeout(() => {
         document.querySelector(".plansza").remove();
         document.querySelector(".punkty").remove();
-        document.querySelector("body").appendChild(document.createElement("div"))
-        document.querySelector("div").setAttribute("class","wynik")
-        document.querySelector("div").appendChild(document.createElement('h1'))
-        document.querySelector("h1").innerHTML="WYNIK:"
-        document.querySelector("div").appendChild(document.createElement("p"))
-        document.querySelector('p').innerHTML="RZĘDY  "+rzedy
-        document.querySelector('div').appendChild(document.createElement("p"))
-        document.querySelectorAll('p')[1].innerHTML="BLOKI   "+punkty
-        document.querySelector('div').appendChild(document.createElement("p"))
-        document.querySelectorAll('p')[2].innerHTML="CZAS  "+przed+minuty+":"+przed+(czas-minuty*60);
+        document
+          .querySelector("body")
+          .appendChild(document.createElement("div"));
+        document.querySelector("div").setAttribute("class", "wynik");
+        document.querySelector("div").appendChild(document.createElement("h1"));
+        document.querySelector("h1").innerHTML = "WYNIK:";
+        document.querySelector("div").appendChild(document.createElement("p"));
+        document.querySelector("p").innerHTML = "RZĘDY  " + rzedy;
+        document.querySelector("div").appendChild(document.createElement("p"));
+        document.querySelectorAll("p")[1].innerHTML = "BLOKI   " + punkty;
+        document.querySelector("div").appendChild(document.createElement("p"));
+        document.querySelectorAll("p")[2].innerHTML =
+          "CZAS  " + przed + minuty + ":" + przed + (czas - minuty * 60);
         document.querySelector("button").innerHTML = "jeszcze raz";
         document.querySelector("button").style.display = "block";
-        document.querySelector('section').style.alignItems="flex-end"
-        document.querySelector("button").style.marginBottom="200px"
-        document.querySelector("section").style.justifyContent="flex-end"
-        
+        document.querySelector("section").style.alignItems = "flex-end";
+        document.querySelector("button").style.marginBottom = "200px";
+        document.querySelector("section").style.justifyContent = "flex-end";
       }, 1000);
-      
     }
-    
   }
-
 }
 
 function odswiez() {
@@ -84,18 +93,19 @@ function odswiez() {
 }
 
 function render() {
-  czas=0;
-  if (rand1==null) {
-    console.log("tak?")
-    document.querySelector('.wynik').remove()
-   }
- rand1 = Math.floor(Math.random() * 7);
- rand2 = rand1;
+  punkty = 0;
+  rzedy = 0;
+  console.log(czas)
+  if (rand1 == null) {
+    document.querySelector(".wynik").remove();
+  }
+  rand1 = Math.floor(Math.random() * 7);
+  rand2 = rand1;
   let szuk = document.getElementsByTagName("div");
   document
     .getElementsByTagName("body")[0]
     .appendChild(document.createElement("div"));
-    
+
   szuk[0].setAttribute("class", "plansza");
   for (i = 1; i <= 23; i++) {
     let oblicz = document.querySelectorAll("div").length;
@@ -110,8 +120,7 @@ function render() {
     }
   }
   for (let index = 0; index < 3; index++) {
-    console.log("wykonane");
-    document.querySelectorAll(".rzad")[index].style.display= "none";
+    document.querySelectorAll(".rzad")[index].style.display = "none";
   }
 
   document
@@ -194,20 +203,61 @@ function ruch(e) {
       bok = 0;
     }
   }
-  if (e.key == "ArrowDown" && rand1!=null) {
+
+  for (let index = 0; index < 4; index++) {
+    dodajnik = 10;
+    if (
+      figury[rand][bok][index] + 10 >=
+      document.querySelectorAll(".kwadrat").length
+    ) {
+      dodajnik = 0;
+    }
+    if (
+      document
+        .querySelectorAll(".kwadrat")
+        [figury[rand][bok][index] + dodajnik].classList.contains("zajete") ||       document
+        .querySelectorAll(".kwadrat")
+        [figury[rand][bok][index] ].classList.contains("zajete")
+    ) {
+      czywykonac = false;
+    } else {
+      czywykonac = true;
+    }
+  }
+
+  if (e.key == "ArrowDown" && rand1 != null && czywykonac == true) {
     wyswietl("none");
     p += 10;
     rzad += 10;
-    console.log("s");
   }
 
   if (e.key == "ArrowRight") {
     if (figury[rand][bok][5] < 9 + rzad) {
+      for (let index = 0; index < 4; index++) {
+        bocz = figury[rand][bok][index];
+        if (
+          document
+            .getElementsByClassName("kwadrat")
+            [bocz + 1].classList.contains("zajete")
+        ) {
+          return 0;
+        }
+      }
       p++;
     }
     wyswietl("none");
   } else if (e.key == "ArrowLeft") {
     if (figury[rand][bok][4] > 0 + rzad) {
+      for (let index = 0; index < 4; index++) {
+        bocz = figury[rand][bok][index];
+        if (
+          document
+            .getElementsByClassName("kwadrat")
+            [bocz - 1].classList.contains("zajete")
+        ) {
+          return 0;
+        }
+      }
       p--;
     }
     wyswietl("none");
@@ -235,12 +285,11 @@ function pokaznastepna() {
     }
     document.getElementsByClassName("kolejnafigura")[kl].style.background =
       figury[rand1][figury[rand1].length - 1][0];
-    console.log(kl);
   }
 }
 
 function stworzblok() {
-  if (rand1==null) {
+  if (rand1 == null) {
     return 0;
   }
   bok = 0;
@@ -331,7 +380,6 @@ function sprawdzanie() {
 }
 
 function wyswietl(kolorek) {
-
   x = 0;
   for (r = 0; r < 4; r++) {
     document.getElementsByClassName("kwadrat")[
@@ -345,11 +393,14 @@ function wyswietl(kolorek) {
         [jak + 10].classList.contains("zajete")
     ) {
       x++;
-
+      console.log(x);
       if (x == 1) {
         for (i = 0; i < 4; i++) {
+          console.log(
+            document.querySelectorAll(".kwadrat")[figury[rand][bok][i]]
+          );
           document
-            .getElementsByClassName("kwadrat")
+            .querySelectorAll(".kwadrat")
             [figury[rand][bok][i]].setAttribute("class", " kwadrat zajete");
         }
         setTimeout(stworzblok, 0);
@@ -357,6 +408,8 @@ function wyswietl(kolorek) {
     }
   }
 }
+
+
 
 function dekfig() {
   figury = [
