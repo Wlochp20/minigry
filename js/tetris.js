@@ -17,10 +17,11 @@ btn[0].addEventListener("click", function () {
     p += 10;
     rzad += 10;
     wyswietl("none");
-    dekfig();
+    dekfig(p);
     wyswietl(figury[rand][figury[rand].length - 1][0]);
     sprawdzanie();
     czywyg();
+  
   }, 300);
 
   setInterval(() => {
@@ -81,14 +82,14 @@ function czywyg() {
         document.querySelector("section").style.alignItems = "flex-end";
         document.querySelector("button").style.marginBottom = "200px";
         document.querySelector("section").style.justifyContent = "flex-end";
-      }, 1000);
+      }, 1200);
     }
   }
 }
 
 function odswiez() {
   wyswietl("none");
-  dekfig();
+  dekfig(p);
   wyswietl(figury[rand][figury[rand].length - 1][0]);
 }
 
@@ -198,10 +199,12 @@ function render() {
 function ruch(e) {
   if (e.key == "ArrowUp") {
     wyswietl("none");
+    // wyswietlnadole("none")
     bok++;
     if (bok >= figury[rand].length - 1) {
       bok = 0;
     }
+    // wyswietlnadole(figury[rand][figury[rand].length - 1][0])
   }
 
   for (let index = 0; index < 4; index++) {
@@ -243,9 +246,11 @@ function ruch(e) {
           return 0;
         }
       }
+      // wyswietlnadole("none")
       p++;
     }
     wyswietl("none");
+    // wyswietlnadole(figury[rand][figury[rand].length - 1][0])
   } else if (e.key == "ArrowLeft") {
     if (figury[rand][bok][4] > 0 + rzad) {
       for (let index = 0; index < 4; index++) {
@@ -258,12 +263,16 @@ function ruch(e) {
           return 0;
         }
       }
+      // wyswietlnadole("none")
       p--;
     }
+
     wyswietl("none");
+    // wyswietlnadole(figury[rand][figury[rand].length - 1][0])
+
   }
 
-  dekfig();
+  dekfig(p);
   wyswietl(figury[rand][figury[rand].length - 1][0]);
 }
 
@@ -273,7 +282,7 @@ function pokaznastepna() {
       "none";
   }
   p = 1;
-  dekfig();
+  dekfig(p);
   for (let index = 0; index < 4; index++) {
     kl = figury[rand1][0][index];
     if (kl >= 30) {
@@ -289,6 +298,7 @@ function pokaznastepna() {
 }
 
 function stworzblok() {
+  
   if (rand1 == null) {
     return 0;
   }
@@ -301,8 +311,9 @@ function stworzblok() {
   rand2 = rand1;
   pokaznastepna();
   p = 4;
-  dekfig();
+  dekfig(p);
   wyswietl(figury[rand][figury[rand].length - 1][0]);
+  // wyswietlnadole(figury[rand][figury[rand].length - 1][0])
 }
 
 function sprawdzanie() {
@@ -408,46 +419,59 @@ function wyswietl(kolorek) {
     }
   }
 }
+// function wyswietlnadole(kolornadole){
+  
+//   // dekfig(Math.round((p/10-Math.floor(p/10))*10))
+//   // for (r = 0; r < 4; r++) {
+//   //   document.getElementsByClassName("kwadrat")[
+//   //     figury[rand][bok][r]
+//   //   ].style.background = kolornadole;
+//   //   // document.getElementsByClassName("kwadrat")[
+//   //   //   figury[rand][bok][r]
+//   //   // ].style.opacity = "0.7";
+//   // }
+  
+//   // dekfig(p)
+// }
 
 
-
-function dekfig() {
+function dekfig(p) {
   figury = [
     [
-      [p + 10, p, p + 20, p + 30, p, p],
+      [ p + 30,p + 10, p, p + 20, p, p],
       [p, p + 3, p + 1, p + 2, p, p + 3],
       ["#F2522E"],
     ],
     [
-      [p, p + 2, p + 1, p + 10 + 1, p, p + 2],
-      [p + 10 + 1, p + 1, p + 10, p + 20 + 1, p + 1, p + 1],
+      [p + 10 + 1,p, p + 2, p + 1,  p, p + 2],
+      [p + 20 + 1,p + 10 + 1, p + 1, p + 10,  p , p + 1],
       [p + 10, p + 12, p + 11, p + 1, p, p + 2],
-      [p + 1, p + 10 + 2, p + 11, p + 21, p + 1, p + 2],
+      [ p + 21,p + 1, p + 10 + 2, p + 11, p + 1, p + 2],
       ["#F2BC57"],
     ],
     [[p, p + 1, p + 10, p + 11, p, p + 1], ["#EDFF7A"]],
     [
-      [p + 11, p + 22, p + 1, p + 21, p + 1, p + 2],
-      [p, p + 2, p + 1, p + 10, p, p + 2],
-      [p + 1, p + 2, p + 10 + 2, p + 20 + 2, p + 1, p + 2],
+      [p + 22,p + 11,  p + 1, p + 21, p + 1, p + 2],
+      [p + 10,p, p + 2, p + 1,  p, p + 2],
+      [p + 20 + 2,p + 1, p + 2, p + 10 + 2,  p + 1, p + 2],
       [p + 10, p + 2, p + 11, p + 12, p, p + 2],
       ["#04BF68"],
     ],
     [
-      [p + 2, p + 12, p + 22, p + 21, p + 1, p + 2],
-      [p, p + 12, p + 10, p + 11, p, p + 2],
-      [p, p + 1, p + 10, p + 20, p, p + 1],
-      [p, p + 2, p + 1, p + 12, p, p + 2],
+      [ p + 21,p + 2, p + 12, p + 22, p + 1, p + 2],
+      [p + 10,p, p + 12,  p + 11, p, p + 2],
+      [ p + 20,p, p + 1, p + 10, p, p + 1],
+      [p + 12,p, p + 2, p + 1,  p, p + 2],
       ["#5E66F2"],
     ],
     [
-      [p + 1, p + 2, p + 10, p + 11, p, p + 2],
-      [p, p + 10, p + 11, p + 21, p, p + 1],
+      [p + 10,p + 1, p + 2,  p + 11, p, p + 2],
+      [p + 10,p,  p + 11, p + 21, p, p + 1],
       ["#2BD9FE"],
     ],
     [
-      [p, p + 1, p + 11, p + 12, p, p + 2],
-      [p + 1, p + 11, p + 10, p + 20, p, p + 1],
+      [p + 11,p, p + 1,  p + 12, p, p + 2],
+      [ p + 20,p + 1, p + 11, p + 10, p, p + 1],
       ["#FEC0CE"],
     ],
   ];
