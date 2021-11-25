@@ -6,6 +6,7 @@ let rand;
 let p;
 let bok;
 let czas;
+
 btn = document.getElementsByTagName("button");
 
 btn[0].addEventListener("click", function () {
@@ -21,7 +22,6 @@ btn[0].addEventListener("click", function () {
     wyswietl(figury[rand][figury[rand].length - 1][0]);
     sprawdzanie();
     czywyg();
-  
   }, 300);
 
   setInterval(() => {
@@ -29,6 +29,8 @@ btn[0].addEventListener("click", function () {
   }, 1000);
 });
 document.addEventListener("keydown", ruch);
+
+document.addEventListener('')
 
 function czywyg() {
   for (let index1 = 30; index1 < 39; index1++) {
@@ -38,43 +40,53 @@ function czywyg() {
       rand1 = null;
       clearInterval(inter);
       setTimeout(() => {
-      for (
-        let index = 0;
-        index < document.querySelectorAll(".kwadrat").length;
-        index++
-      ) {
-        if (
-          document
-            .querySelectorAll(".kwadrat")
-            [index].classList.contains("zajete")
+        for (
+          let index = 0;
+          index < document.querySelectorAll(".kwadrat").length;
+          index++
         ) {
-          setTimeout(() => {
-            document.querySelectorAll(".kwadrat")[index].style.background =
-              "blueviolet";
-          }, index * 3);
+          if (
+            document
+              .querySelectorAll(".kwadrat")
+              [index].classList.contains("zajete")
+          ) {
+            setTimeout(() => {
+              document.querySelectorAll(".kwadrat")[index].style.background =
+                "blueviolet";
+            }, index * 3);
+          }
         }
-      }
-    }, 300);
+      }, 300);
+      przed=""
       minuty = Math.floor(czas / 60);
       if (czas - minuty * 60 < 10) {
         przed = "0";
-      } else if(czas - minuty * 60>9) {
-        przed = "";
-      }
+      } 
+      
       setTimeout(() => {
+        if (window.innerWidth>=800) {
+          document.querySelector(".punkty").remove();
+        }
         document.querySelector(".plansza").remove();
-        document.querySelector(".punkty").remove();
         document
           .querySelector("body")
           .appendChild(document.createElement("div"));
-        document.querySelector("div").setAttribute("class", "wynik");
-        document.querySelector("div").appendChild(document.createElement("h1"));
+        document.querySelectorAll("div")[1].setAttribute("class", "wynik");
+        document
+          .querySelectorAll("div")[1]
+          .appendChild(document.createElement("h1"));
         document.querySelector("h1").innerHTML = "WYNIK:";
-        document.querySelector("div").appendChild(document.createElement("p"));
+        document
+          .querySelectorAll("div")[1]
+          .appendChild(document.createElement("p"));
         document.querySelector("p").innerHTML = "RZĘDY  " + rzedy;
-        document.querySelector("div").appendChild(document.createElement("p"));
+        document
+          .querySelectorAll("div")[1]
+          .appendChild(document.createElement("p"));
         document.querySelectorAll("p")[1].innerHTML = "BLOKI   " + punkty;
-        document.querySelector("div").appendChild(document.createElement("p"));
+        document
+          .querySelectorAll("div")[1]
+          .appendChild(document.createElement("p"));
         document.querySelectorAll("p")[2].innerHTML =
           "CZAS  " + przed + minuty + ":" + przed + (czas - minuty * 60);
         document.querySelector("button").innerHTML = "jeszcze raz";
@@ -96,7 +108,7 @@ function odswiez() {
 function render() {
   punkty = 0;
   rzedy = 0;
-  console.log(czas)
+  console.log(czas);
   if (rand1 == null) {
     document.querySelector(".wynik").remove();
   }
@@ -107,11 +119,14 @@ function render() {
     .getElementsByTagName("body")[0]
     .appendChild(document.createElement("div"));
 
-  szuk[0].setAttribute("class", "plansza");
+  szuk[document.querySelectorAll("div").length - 1].setAttribute(
+    "class",
+    "plansza"
+  );
   for (i = 1; i <= 23; i++) {
     let oblicz = document.querySelectorAll("div").length;
     let cd = document.createElement("div");
-    document.getElementsByTagName("div")[0].appendChild(cd);
+    document.getElementsByTagName("div")[1].appendChild(cd);
     szuk[oblicz].setAttribute("class", "rzad");
     for (j = 2; j <= 11; j++) {
       let oblicz1 = document.querySelectorAll("div").length;
@@ -123,7 +138,7 @@ function render() {
   for (let index = 0; index < 3; index++) {
     document.querySelectorAll(".rzad")[index].style.display = "none";
   }
-
+  if (window.innerWidth >= 800) {
   document
     .getElementsByTagName("body")[0]
     .appendChild(document.createElement("div"));
@@ -193,7 +208,7 @@ function render() {
       "class",
       "napis"
     );
-
+  }
   stworzblok();
 }
 function ruch(e) {
@@ -218,9 +233,10 @@ function ruch(e) {
     if (
       document
         .querySelectorAll(".kwadrat")
-        [figury[rand][bok][index] + dodajnik].classList.contains("zajete") ||       document
+        [figury[rand][bok][index] + dodajnik].classList.contains("zajete") ||
+      document
         .querySelectorAll(".kwadrat")
-        [figury[rand][bok][index] ].classList.contains("zajete")
+        [figury[rand][bok][index]].classList.contains("zajete")
     ) {
       czywykonac = false;
     } else {
@@ -269,7 +285,6 @@ function ruch(e) {
 
     wyswietl("none");
     // wyswietlnadole(figury[rand][figury[rand].length - 1][0])
-
   }
 
   dekfig(p);
@@ -277,28 +292,31 @@ function ruch(e) {
 }
 
 function pokaznastepna() {
-  for (let index1 = 0; index1 < 15; index1++) {
-    document.getElementsByClassName("kolejnafigura")[index1].style.background =
-      "none";
-  }
-  p = 1;
-  dekfig(p);
-  for (let index = 0; index < 4; index++) {
-    kl = figury[rand1][0][index];
-    if (kl >= 30) {
-      kl -= 18;
-    } else if (kl >= 20) {
-      kl -= 12;
-    } else if (kl >= 10) {
-      kl -= 6;
+  if (window.innerWidth >= 800) {
+  
+    for (let index1 = 0; index1 < 15; index1++) {
+      document.getElementsByClassName("kolejnafigura")[
+        index1
+      ].style.background = "none";
     }
-    document.getElementsByClassName("kolejnafigura")[kl].style.background =
-      figury[rand1][figury[rand1].length - 1][0];
+    p = 1;
+    dekfig(p);
+    for (let index = 0; index < 4; index++) {
+      kl = figury[rand1][0][index];
+      if (kl >= 30) {
+        kl -= 18;
+      } else if (kl >= 20) {
+        kl -= 12;
+      } else if (kl >= 10) {
+        kl -= 6;
+      }
+      document.getElementsByClassName("kolejnafigura")[kl].style.background =
+        figury[rand1][figury[rand1].length - 1][0];
+    }
   }
 }
 
 function stworzblok() {
-  
   if (rand1 == null) {
     return 0;
   }
@@ -333,10 +351,11 @@ function sprawdzanie() {
     if (rz == 10) {
       rzedy++;
       punkty += 10;
+      if (window.innerWidth >= 800) {
       document.getElementsByClassName("napis")[0].innerHTML = "rzędy: " + rzedy;
       document.getElementsByClassName("napis")[1].innerHTML =
         "punkty: " + punkty;
-
+      }
       for (let i = 1; i <= 10; i++) {
         pt = 229 - Math.floor(document.querySelectorAll(".kwadrat").length - x);
         kwadracik =
@@ -420,7 +439,7 @@ function wyswietl(kolorek) {
   }
 }
 // function wyswietlnadole(kolornadole){
-  
+
 //   // dekfig(Math.round((p/10-Math.floor(p/10))*10))
 //   // for (r = 0; r < 4; r++) {
 //   //   document.getElementsByClassName("kwadrat")[
@@ -430,48 +449,47 @@ function wyswietl(kolorek) {
 //   //   //   figury[rand][bok][r]
 //   //   // ].style.opacity = "0.7";
 //   // }
-  
+
 //   // dekfig(p)
 // }
-
 
 function dekfig(p) {
   figury = [
     [
-      [ p + 30,p + 10, p, p + 20, p, p],
+      [p + 30, p + 10, p, p + 20, p, p],
       [p, p + 3, p + 1, p + 2, p, p + 3],
       ["#F2522E"],
     ],
     [
-      [p + 10 + 1,p, p + 2, p + 1,  p, p + 2],
-      [p + 20 + 1,p + 10 + 1, p + 1, p + 10,  p , p + 1],
+      [p + 10 + 1, p, p + 2, p + 1, p, p + 2],
+      [p + 20 + 1, p + 10 + 1, p + 1, p + 10, p, p + 1],
       [p + 10, p + 12, p + 11, p + 1, p, p + 2],
-      [ p + 21,p + 1, p + 10 + 2, p + 11, p + 1, p + 2],
+      [p + 21, p + 1, p + 10 + 2, p + 11, p + 1, p + 2],
       ["#F2BC57"],
     ],
     [[p, p + 1, p + 10, p + 11, p, p + 1], ["#EDFF7A"]],
     [
-      [p + 22,p + 11,  p + 1, p + 21, p + 1, p + 2],
-      [p + 10,p, p + 2, p + 1,  p, p + 2],
-      [p + 20 + 2,p + 1, p + 2, p + 10 + 2,  p + 1, p + 2],
+      [p + 22, p + 11, p + 1, p + 21, p + 1, p + 2],
+      [p + 10, p, p + 2, p + 1, p, p + 2],
+      [p + 20 + 2, p + 1, p + 2, p + 10 + 2, p + 1, p + 2],
       [p + 10, p + 2, p + 11, p + 12, p, p + 2],
       ["#04BF68"],
     ],
     [
-      [ p + 21,p + 2, p + 12, p + 22, p + 1, p + 2],
-      [p + 10,p, p + 12,  p + 11, p, p + 2],
-      [ p + 20,p, p + 1, p + 10, p, p + 1],
-      [p + 12,p, p + 2, p + 1,  p, p + 2],
+      [p + 21, p + 2, p + 12, p + 22, p + 1, p + 2],
+      [p + 10, p, p + 12, p + 11, p, p + 2],
+      [p + 20, p, p + 1, p + 10, p, p + 1],
+      [p + 12, p, p + 2, p + 1, p, p + 2],
       ["#5E66F2"],
     ],
     [
-      [p + 10,p + 1, p + 2,  p + 11, p, p + 2],
-      [p + 10,p,  p + 11, p + 21, p, p + 1],
+      [p + 10, p + 1, p + 2, p + 11, p, p + 2],
+      [p + 10, p, p + 11, p + 21, p, p + 1],
       ["#2BD9FE"],
     ],
     [
-      [p + 11,p, p + 1,  p + 12, p, p + 2],
-      [ p + 20,p + 1, p + 11, p + 10, p, p + 1],
+      [p + 11, p, p + 1, p + 12, p, p + 2],
+      [p + 20, p + 1, p + 11, p + 10, p, p + 1],
       ["#FEC0CE"],
     ],
   ];
