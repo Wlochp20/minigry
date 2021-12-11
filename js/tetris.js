@@ -10,6 +10,7 @@ let czas;
 btn = document.getElementsByTagName("button");
 
 btn[0].addEventListener("click", function () {
+  
   btn[0].style.display = "none";
   btn[1].style.display = "none";
   render();
