@@ -2,6 +2,7 @@ let losowa;
 let kolejna=1;
 let p=1;
 let ruch=[];
+let wygrane=[];
 let ruchprzeciwnika=[];
 let wygrana=[
     [1,2,3],
@@ -80,8 +81,13 @@ function przeciwnik() {
 
 function czywyg(jaka) {
     let czywygrana=0;
+    wygrane=[]
     for (let index1 = 0; index1 < wygrana.length; index1++) {
         if (czywygrana==3) {
+            for (let i = 0; i < wygrane.length; i++) {
+                document.querySelectorAll(".kwadrat")[wygrane[i]].style.background="red"
+
+            }
             setTimeout(() => {
                 document.write("wygrana")
             }, 200);
@@ -92,6 +98,7 @@ function czywyg(jaka) {
         for (let index = 0; index < wygrana[index1].length; index++) {
             for (let index3 = 0; index3 < ruch.length; index3++) {
                 if (jaka[index3]==wygrana[index1][index]) {
+                wygrane.push(jaka[index3])
                 czywygrana++;
                 }
             }
