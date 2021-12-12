@@ -57,11 +57,15 @@ function render() {
         }
 
 }
+if (twoj=="krzyz") 
+przeciwnik()
 }  
 function graj() {
     if (this.classList.contains("zajete")) {
         return 0;
     }
+    
+    
     this.setAttribute("class","kwadrat zajete")
     kolko=document.createElement("div")
     this.appendChild(kolko)
