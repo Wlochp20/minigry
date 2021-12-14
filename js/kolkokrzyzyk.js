@@ -6,6 +6,11 @@ let wygrane = [];
 let ruchprzeciwnika = [];
 let twoj = "kolko";
 let przeciwnika = "krzyz";
+let pktkrzyzyka = 0;
+let pktkolka = 0;
+let remis = 0;
+let soloduo;
+
 let wygrana = [
   [1, 2, 3],
   [1, 4, 7],
@@ -37,7 +42,9 @@ document.querySelector("button").addEventListener("click", function () {
 });
 
 function render() {
-  // document.querySelector("select").style.display="none"
+
+  soloduo = document.querySelector("select").value;
+  document.querySelector("select").style.display = "none";
   // document.querySelectorAll("button")[1].style.display="none"
   document.querySelector(".krzyz").style.setProperty("--color", "whitesmoke");
   document.querySelector("button").style.display = "none";
@@ -79,8 +86,11 @@ function render() {
         );
       kolejna++;
     }
+    if (twoj=="krzyz" && soloduo=="d" ) {
+      twoj="kolko"
+    }
   }
-  if (twoj == "krzyz") przeciwnik();
+  if (twoj == "krzyz" && soloduo != "d") przeciwnik();
 }
 function graj() {
   if (this.classList.contains("zajete")) {
@@ -91,17 +101,30 @@ function graj() {
   kolko = document.createElement("div");
   this.appendChild(kolko);
   kolko.className = twoj;
-  ruch.push(this.id);
-  // console.log(this.id)
-  czywyg(ruch);
-  for (let index2 = 0; index2 < 9; index2++) {
-    if (
-      document
-        .querySelectorAll(".kwadrat")
-        [index2].classList.contains("zajete") == false
-    ) {
-      przeciwnik();
-      break;
+
+  if (soloduo == "d") {
+    if (twoj == "krzyz") {
+      ruchprzeciwnika.push(this.id);
+      czywyg(ruchprzeciwnika);
+      twoj = "kolko";
+    } else {
+      twoj = "krzyz";
+      ruch.push(this.id);
+      czywyg(ruch);
+    }
+  } else {
+    ruch.push(this.id);
+    czywyg(ruch);
+    // console.log(this.id)
+    for (let index2 = 0; index2 < 9; index2++) {
+      if (
+        document
+          .querySelectorAll(".kwadrat")
+          [index2].classList.contains("zajete") == false
+      ) {
+        przeciwnik();
+        break;
+      }
     }
   }
 }
@@ -126,45 +149,40 @@ function przeciwnik() {
 
     czywyg(ruchprzeciwnika);
   }, 200);
-  console.log(document.querySelectorAll(".kwadrat")[losowa].id);
+  // console.log(document.querySelectorAll(".kwadrat")[losowa].id);
 }
 
+// function przeciwnik2() {
+//   if (this.classList.contains("zajete")) {
+//     return 0;
+//   }
+
+//   this.setAttribute("class", "kwadrat zajete");
+//   krzyzyk = document.createElement("div");
+//   this.appendChild(krzyzyk);
+//   krzyzyk.className = "krzyz";
+//   ruchprzeciwnika.push(this.id);
+//   czywyg(ruchprzeciwnika);
+//   graj()
+
+//   }
+
 function czywyg(jaka) {
+  remis = 0;
+  for (let j = 0; j < 9; j++) {
+    if (document.querySelectorAll(".kwadrat")[j].classList.contains("zajete")) {
+      remis++;
+    }
+  }
+  if (remis == 9) {
+    setTimeout(() => {
+      koniec();
+    }, 500);
+  }
+
   let czywygrana = 0;
   wygrane = [];
   for (let index1 = 0; index1 < wygrana.length; index1++) {
-    if (czywygrana == 3) {
-      for (let i = 0; i < wygrane.length; i++) {
-        if (
-          document
-            .getElementById(wygrane[i])
-            .children[0].classList.contains("krzyz")
-        ) {
-            console.log("dziala")
-            document.getElementById(wygrane[i]).children[0].style.setProperty("--color", "blueviolet");
-        } else {
-          document.getElementById(wygrane[i]).children[0].style.border =
-            "5px solid blueviolet";
-        }
-      }
-      setTimeout(() => {
-        document.querySelector(".plansza").remove()
-         kolejna = 1;
-         czywygrana=0
-         p = 1;
-         ruch = [];
-         wygrane = [];
-         ruchprzeciwnika = [];
-         document.querySelector("button").style.display = "block";
-         document.querySelector(".wybor").style.display = "flex";
-         if (twoj=="krzyz") {
-             document.querySelector(".krzyz").setProperty("--color","rgb(0, 225, 255)");
-         }else{
-            document.querySelector(".kolko").style.border="1px solid rgb(0, 225, 255)"
-         }
-
-      }, 200);
-    }
     czywygrana = 0;
     for (let index = 0; index < wygrana[index1].length; index++) {
       for (let index3 = 0; index3 < ruch.length; index3++) {
@@ -172,8 +190,84 @@ function czywyg(jaka) {
           wygrane.push(jaka[index3]);
           czywygrana++;
         }
+        if (czywygrana == 3) {
+          for (let i = 0; i < 3; i++) {
+            if (
+              document
+                .getElementById(wygrane[0])
+                .children[0].classList.contains("krzyz")
+            ) {
+              // console.log("dziala")
+              document
+                .getElementById(wygrana[index1][i])
+                .children[0].style.setProperty("--color", "blueviolet");
+            } else {
+              document.getElementById(
+                wygrana[index1][i]
+              ).children[0].style.border = "5px solid blueviolet";
+            }
+          }
+          setTimeout(() => {
+            koniec();
+          }, 500);
+        }
       }
     }
+
     // console.log("co")
+  }
+}
+
+function koniec() {
+  //punktacja u góry
+
+  if (remis == 9) {
+  } else if (
+    document.getElementById(wygrane[0]).children[0].classList.contains("krzyz")
+  ) {
+    pktkolka++;
+  } else {
+    pktkrzyzyka++;
+  }
+
+  // nowy = document.createElement("div");
+  // document.querySelector("body").appendChild(nowy);
+  // punktykolko = document.createElement("div");
+  // punktykrzyzyk = document.createElement("div");
+  // punktykolko.setAttribute("id", "gora");
+  // punktykolko.setAttribute("class", "kolko");
+  // punktykrzyzyk.setAttribute("id", "kgora");
+  // punktykrzyzyk.setAttribute("class", "krzyz");
+  // h11 = document.createElement("span");
+  // h12 = document.createElement("span");
+  // nowy.appendChild(h11);
+  // nowy.appendChild(punktykolko);
+  // nowy.appendChild(h12);
+  // h11.setAttribute("id", "pp");
+  // h12.setAttribute("id", "pp1");
+  // nowy.appendChild(punktykrzyzyk);
+  // nowy.setAttribute("class", "wyniki");
+  document.querySelector("select").style.display = "block";
+  document.querySelector("span").innerHTML = pktkrzyzyka;
+  document.querySelectorAll("span")[1].innerHTML = pktkolka;
+  document.querySelector(".plansza").remove();
+  kolejna = 1;
+  czywygrana = 0;
+  p = 1;
+  ruch = [];
+  wygrane = [];
+  ruchprzeciwnika = [];
+  document.querySelector("button").style.display = "block";
+  document.querySelector(".wybor").style.display = "flex";
+
+  if (twoj == "krzyz") {
+    document
+      .querySelector(".krzyz")
+      .style.setProperty("--color", "rgb(0, 225, 255)");
+    document.querySelector(".kolko").style.border = "5px solid whitesmoke";
+  } else {
+    document.querySelector(".kolko").style.border =
+      "5px solid rgb(0, 225, 255)";
+    document.querySelector(".krzyz").style.setProperty("--color", "whitesmoke");
   }
 }
