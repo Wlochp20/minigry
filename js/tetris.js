@@ -31,7 +31,6 @@ btn[0].addEventListener("click", function () {
 });
 document.addEventListener("keydown", ruch);
 
-document.addEventListener('')
 
 function czywyg() {
   for (let index1 = 30; index1 < 39; index1++) {
