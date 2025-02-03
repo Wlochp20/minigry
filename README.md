@@ -1,6 +1,6 @@
 # Mini games
 
-##Tetris
+## Tetris
 Accessing the Game:
   -Go to the Games section of the website.
   -Click on the Tetris tile to open the game.
