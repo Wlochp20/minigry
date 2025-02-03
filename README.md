@@ -15,3 +15,4 @@ Controls:
   - Left Arrow (←) - Moves the piece to the left.
   - Right Arrow (→) - Moves the piece to the right.
 
+[https://wlochp20.github.io/minigry/]
